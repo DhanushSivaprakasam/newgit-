@@ -1,0 +1,21 @@
+import pandas as pd
+import numpy as np
+from sklearn.preprocessing import LabelEncoder
+import matplotlib.pyplot as plt
+
+df = pd.read_csv('dataset.csv')
+
+# shape of data
+df.shape
+
+# head and tail of data
+df.head()
+df.tail()
+
+label_encoder = LabelEncoder()
+df['internal_status_label_encoded'] = label_encoder.fit_transform(df['internalStatus'])
+df['externalStatus'] = df['externalStatus'].str.replace(r'[^a-zA-Z\s]', '').str.lower()
+df['internalStatus'] = df['internalStatus'].str.replace(r' ', '_').str.lower()
+
+
+df = df.loc[:, ~df.columns.str.contains('^Unnamed')]   
